@@ -8,7 +8,7 @@ import Loading from './Loading.tsx';
 
 
 
-let _news = []
+let articleList = []
 const url = 'https://newsapi.org/v2/top-headlines/';
 const apiKey =  'MY API KEY';
 
@@ -21,22 +21,22 @@ const Articles:React.FC = () => {
     const [news, setNews] = useState<any[]>([]);
     
     
-    const fetchData = async (_category:string) => {
+    const fetchData = async (currentCategory:string) => {
         if(page <= 5){
          try {
              const response = await axios.get(url, {
                  params: {
                      country: 'in',
-                     category: _category,
+                     category: currentCategory,
                      apiKey: apiKey,
                      pageSize: 9,
                      page: page,
                  },
              });
  
-             _news = response.data.articles;
+             articleList = response.data.articles;
              setNews((prevNews) => {
-                 const uniqueNews = _news.filter((newArticle) => {
+                 const uniqueNews = articleList.filter((newArticle) => {
                      return !prevNews.some((existingArticle) => existingArticle.url === newArticle.url);
                  });
              
